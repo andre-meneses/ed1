@@ -3,6 +3,7 @@
 int main()
 {
     struct linkedlist *lista = inicializar();
+    struct linkedlist *lista2 = inicializar();
     
     for (int i = 0; i < 6; i++) inserirElementoNoFim(lista,i);
 
@@ -19,6 +20,21 @@ int main()
     inserirElementoEmPosicao(lista,12,lista->size-1);
     imprimirLista(lista);
 
+    for (int i = 0; i < 5; i++) inserirElementoEmPosicao(lista2,i,i);
+    //imprimirLista(lista2);
+
+    /*for (int i = 0; i < 100; i++) 
+    {
+        printf("%d, ",obterElementoEmPosicao(lista2,i));
+    }
+    printf("\n");*/
+
+    printf("%d \n", obterElementoEmPosicao(lista,0));
+    printf("%d \n", obterElementoEmPosicao(lista,8));
+    printf("%d \n", obterElementoEmPosicao(lista,2));
+    printf("%d \n", obterElementoEmPosicao(lista,14));
+    printf("%d \n", lista->size);
+
     removerElementoEmPosicao(lista,0);
     imprimirLista(lista);
 
@@ -29,9 +45,6 @@ int main()
     imprimirLista(lista);
 
 
-    printf("%d\n",obterElementoEmPosicao(lista,0));
-    printf("%d\n",obterElementoEmPosicao(lista,lista->size-1));
-    printf("%d\n",obterElementoEmPosicao(lista,3));
 
     return 0;    
 }

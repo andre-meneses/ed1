@@ -2,7 +2,7 @@
 
 struct linkedlist *inicializar()
 {
-    struct linkedlist *list = malloc(sizeof *list);
+    struct linkedlist *list = (struct linkedlist*) malloc(sizeof *list);
     list->head = NULL;
     list->size = 0;
     return list;
@@ -29,12 +29,12 @@ void imprimirLista(struct linkedlist* lista){
 }
 
 void inserirElementoNoFim(struct linkedlist* lista, int valor){
-    struct node *newNode = malloc(sizeof *newNode);
+    struct node *newNode = (struct node*) malloc(sizeof *newNode);
 
     newNode->prox = NULL;
     newNode->val = valor;
 
-    if(lista->size == 0)
+    if(lista->head == NULL)
     {
         lista->head = newNode;
         lista->tail = newNode;
@@ -49,11 +49,11 @@ void inserirElementoNoFim(struct linkedlist* lista, int valor){
 }
 void inserirElementoNoInicio(struct linkedlist* lista, int valor){
 
-    struct node *newNode = malloc(sizeof *newNode);
+    struct node *newNode =(struct node*) malloc(sizeof *newNode);
 
     newNode->val = valor;
 
-    if(lista->size == 0)
+    if(lista->head == NULL)
     {
         newNode->prox = NULL;
         lista->head = newNode;
@@ -69,11 +69,17 @@ void inserirElementoNoInicio(struct linkedlist* lista, int valor){
 }
 
 void inserirElementoEmPosicao(struct linkedlist* lista, int valor, int posicao){
-    if(posicao == 0) inserirElementoNoInicio(lista,valor); 
-    else if (posicao == lista->size-1) inserirElementoNoFim(lista,valor);
+    if(posicao == 0) 
+    {
+        inserirElementoNoInicio(lista,valor); 
+    }
+    else if (posicao == lista->size) 
+    {
+        inserirElementoNoFim(lista,valor);
+    }
     else if(posicao < lista->size && posicao > 0)
     {
-        struct node *newNode = malloc(sizeof *newNode);
+        struct node *newNode = (struct node* )malloc(sizeof *newNode);
         struct node *foundNode = buscarPosicao(lista,posicao-1);
 
         newNode->val = valor;
@@ -114,7 +120,7 @@ void removerElementoEmPosicao(struct linkedlist* lista, int posicao){
         lista->tail->prox = NULL;
         lista->size--;
     }
-    else if(posicao < lista->size-1 && posicao > 0)
+    else if(posicao < lista->size && posicao > 0)
     {
         struct node *foundNode = buscarPosicao(lista,posicao-1);
         struct node *newPosNode = foundNode->prox->prox;
