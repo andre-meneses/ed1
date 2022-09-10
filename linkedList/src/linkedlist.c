@@ -1,5 +1,13 @@
 #include "../header/linkedlist.h" 
 
+struct linkedlist *inicializar()
+{
+    struct linkedlist *list = malloc(sizeof *list);
+    list->head = NULL;
+    list->size = 0;
+    return list;
+}
+
 void imprimirLista(struct linkedlist* lista){
     //usamos o aux para percorrer a lista
     if (lista->head != NULL) {

@@ -2,7 +2,7 @@
 
 int main()
 {
-    struct linkedlist *lista = malloc(sizeof *lista);
+    struct linkedlist *lista = inicializar();
     
     for (int i = 0; i < 6; i++) inserirElementoNoFim(lista,i);
 

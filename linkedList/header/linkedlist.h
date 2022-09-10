@@ -12,6 +12,7 @@ struct linkedlist {
     int size;
 };
 
+struct linkedlist *inicializar();
 void imprimirLista(struct linkedlist* lista);
 void inserirElementoNoFim(struct linkedlist* lista, int valor);
 void inserirElementoNoInicio(struct linkedlist* lista, int valor);
