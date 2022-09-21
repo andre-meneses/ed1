@@ -42,15 +42,13 @@ bool vazia(struct arraystack* pilha) {
 
 //decrementar qtdade se a pilha não estiver nula ou vazia
 void desempilhar(struct arraystack* pilha){
-    if(pilha != NULL || pilha->qtdade != 0) pilha->qtdade--;
+    if(pilha != NULL && pilha->qtdade > 0) pilha->qtdade--;
 }
 
 //retorne a constante INT_MIN se a pilha for nula ou vazia
 int desempilharRetornando(struct arraystack* pilha){
     if(pilha == NULL || pilha->qtdade == 0) return INT_MIN;
-
-    pilha->qtdade--;
-
+    desempilhar(pilha);
     return pilha->elementos[pilha->qtdade];
 }
 
