@@ -23,10 +23,7 @@ void duplicarCapacidade(struct arraystack* pilha){
 //por causa da possibilidade de instanciacao usamos struct arraystack**
 //se a pilha encher, duplique a capacidade do array
 void empilhar(struct arraystack** pilha, int valor){
-    if ((*pilha) == NULL)
-    {
-        (*pilha) = inicializar(10); 
-    }
+    if ((*pilha) == NULL) (*pilha) = inicializar(10);
 
     if((*pilha)->qtdade == (*pilha)->tamanho) duplicarCapacidade(*pilha);
 
