@@ -1,4 +1,5 @@
 #include <limits.h>
+#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include "../header/auxiliarOrdenacao.h"
@@ -24,14 +25,17 @@ void swap(int *vetor, int i, int j)
 
 int randomValue(int min, int max)
 {
-    return min + rand() / (RAND_MAX / (max - min) + 1);
+    return min + rand() / (RAND_MAX / (max - min + 1) + 1);
 }
 
 int particiona(int *vetor, int ini, int fim)
 {
     int pIndex = ini;
     int rIndex = randomValue(ini,fim);
-    int pivo = vetor[rIndex];
+    
+    swap(vetor,fim,rIndex);
+
+    int pivo = vetor[fim];
 
     for(int i = ini; i < fim; i++){
         if(vetor[i] <= pivo)
@@ -41,7 +45,29 @@ int particiona(int *vetor, int ini, int fim)
         }
     }
 
-    swap(vetor,pIndex,rIndex);
+    swap(vetor,pIndex,fim);
 
     return pIndex;
+}
+
+void merge(int *vetor, int ini, int meio, int fim, int tam)
+{
+    int i = ini, j = meio, k = 0;
+
+    int *aux = malloc(tam * sizeof(int));
+
+    while(i < meio && j <= fim)
+    {
+        if(vetor[i] < vetor[j]) aux[k++] = vetor[i++];
+        else aux[k++] = vetor[j++];
+    }
+
+    while(i < meio) aux[k++] = vetor[i++];
+    while(j <= fim) aux[k++] = vetor[j++];
+
+    int count = 0;
+
+    for(int i = ini; i <=fim; i++) vetor[i] = aux[count++];
+
+    free(aux);
 }
