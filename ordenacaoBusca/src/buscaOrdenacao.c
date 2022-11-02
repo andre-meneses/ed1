@@ -3,22 +3,11 @@
 #include <limits.h>
 #include <stdbool.h>
 #include "../header/buscaOrdenacao.h"
+#include "../header/auxiliarOrdenacao.h"
 
 int buscaBinaria(int *vetor, int valor, int tamanho)
 {
    return buscaBinariaAux(vetor, valor, 0, tamanho-1); 
-}
-
-int buscaBinariaAux(int *vetor, int valor, int inicio, int fim)
-{
-    if(inicio - fim > 0) return INT_MAX; 
-
-    int meio = (inicio + fim)/2;
-
-    if(vetor[meio] == valor) return meio;
-
-    if(vetor[meio] > valor) return buscaBinariaAux(vetor,valor,inicio,meio-1);
-    else return buscaBinariaAux(vetor,valor,meio+1,fim);
 }
 
 void selectionSort(int *vetor, int tamanho)
@@ -86,4 +75,14 @@ int* countingSort(int *vetor, int size)
     return ordenado;
 }
 
+
+void quickSort(int *vetor, int ini, int fim)
+{
+    if(fim > ini)
+    {
+        int indexPivo = particiona(vetor,ini,fim);
+        quickSort(vetor, ini, indexPivo-1);
+        quickSort(vetor, indexPivo + 1, fim);
+    }
+}
 
