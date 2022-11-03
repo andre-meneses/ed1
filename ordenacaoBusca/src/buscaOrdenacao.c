@@ -96,3 +96,15 @@ void mergeSort(int *vetor, int ini, int fim)
     }
 }
 
+void insertionSort(int *vetor, int tam)
+{
+    for(int i = 1; i < tam; i++)
+    {
+        for(int j = i; j > 0; j--)
+        {
+           if(vetor[j-1] > vetor[j]) swap(vetor, j, j-1);
+           else break;
+        }
+    }
+}
+
