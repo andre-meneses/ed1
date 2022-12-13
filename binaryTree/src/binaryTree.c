@@ -69,9 +69,10 @@ bool buscar(struct bst* bst, int val, bool rec) {
     return buscarIt(bst->raiz,val);
 }
 
-/* void navEmOrdem(struct noBst* raiz) { */
-/*     //IMPLEMENTAR */
-/* } */
+void navEmOrdem(struct noBst* raiz) {
+    if (raiz == NULL) return;
+
+}
 
 /* void navPreOrdem(struct noBst* raiz) { */
 /*     //IMPLEMENTAR */
