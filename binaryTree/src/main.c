@@ -17,10 +17,10 @@ int main()
     printf("%d\n", h);
     printf("%d\n", mi);
     printf("%d\n", ma);
-    printf("%d\n", buscar(arvore,12,true));
-    printf("%d\n", buscar(arvore,20,true));
-    printf("%d\n", buscar(arvore,4,true));
-    printf("%d\n", buscar(arvore,22,true));
+    /* printf("%d\n", buscar(arvore,12,false)); */
+    /* printf("%d\n", buscar(arvore,20,false)); */
+    /* printf("%d\n", buscar(arvore,4,false)); */
+    /* printf("%d\n", buscar(arvore,22,false)); */
 
     return 0;
 }

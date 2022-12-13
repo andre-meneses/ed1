@@ -27,13 +27,14 @@ void inserirNoRec(struct noBst** raiz, struct noBst* novoNo) {
 }
 
 void inserirNoIt(struct noBst* raiz, struct noBst* novoNo) {
-    struct noBst* current = raiz;
-    while(current != NULL)
+    struct noBst **rr = &raiz; 
+
+    while(*rr != NULL)
     {
-        if(current->val > novoNo->val) current = current->esq;
-        else current = current->dir;
+        if((*rr)->val > novoNo->val) rr = &(*rr)->esq;
+        else rr = &(*rr)->dir;
     }
-    current = novoNo;
+    *rr = novoNo;
 }
 
 void inserir(struct bst* bst, int val, bool rec) {
