@@ -27,9 +27,13 @@ void inserirNoRec(struct noBst** raiz, struct noBst* novoNo) {
 }
 
 void inserirNoIt(struct noBst* raiz, struct noBst* novoNo) {
-    if (raiz == NULL) raiz = novoNo;
-    else if(novoNo->val > raiz->val) inserirNoIt(raiz->dir, novoNo);
-    else inserirNoIt(raiz->esq,novoNo);
+    struct noBst* current = raiz;
+    while(current != NULL)
+    {
+        if(current->val > novoNo->val) current = current->esq;
+        else current = current->dir;
+    }
+    current = novoNo;
 }
 
 void inserir(struct bst* bst, int val, bool rec) {
@@ -76,17 +80,26 @@ bool buscar(struct bst* bst, int val, bool rec) {
 /*     //IMPLEMENTAR */
 /* } */
 
-/* int min(struct noBst* raiz) { */
-/*     //IMPLEMENTAR */
-/* } */
+int min(struct noBst* raiz) {
+    if (raiz->esq == NULL) return raiz->val;
+    else return min(raiz->esq);
+}
 
-/* int max(struct noBst* raiz) { */
-/*     //IMPLEMENTAR */
-/* } */
+int max(struct noBst* raiz) {
+    if (raiz->dir == NULL) return raiz->val;
+    else return max(raiz->dir);
+}
 
-/* int altura(struct noBst* raiz) { */
-/*     //IMPLEMENTAR */
-/* } */
+int maior(int a, int b)
+{
+    if(a > b) return a;
+    else return b;
+}
+
+int altura(struct noBst* raiz) {
+    if(raiz == NULL) return -1;
+    else return 1 + maior(altura(raiz->esq),altura(raiz->dir)); 
+}
 
 /* struct noBst* removerRec(struct noBst* raiz, int val) { */
 /*     //IMPLEMENTAR */
