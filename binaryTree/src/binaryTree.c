@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <sys/queue.h>
 #include "../header/binaryTree.h"
 
 struct bst* alocarBst() {
@@ -19,6 +20,29 @@ struct noBst* alocarNovoNo(int val) {
 
     return no;
 }
+
+//  Funções auxiliares
+int maior(int a, int b)
+{
+    if(a > b) return a;
+    else return b;
+}
+
+TAILQ_HEAD(tailhead, entry) head;
+
+struct entry{
+    struct noBst *raiz;
+    TAILQ_ENTRY(entry) entries;
+};
+
+void add_to_queue(struct noBst *raiz)
+{
+    struct entry *elem = malloc(sizeof *elem);
+    if (elem) elem->raiz = raiz;
+    TAILQ_INSERT_TAIL(&head, elem, entries);
+}
+
+//---------------------------------------------
 
 void inserirNoRec(struct noBst** raiz, struct noBst* novoNo) {
     if((*raiz) == NULL) (*raiz) = novoNo;
@@ -70,17 +94,50 @@ bool buscar(struct bst* bst, int val, bool rec) {
 }
 
 void navEmOrdem(struct noBst* raiz) {
-    if (raiz == NULL) return;
-
+    //Esq, raíz, direita
+    if(raiz != NULL){
+        navEmOrdem(raiz->esq);
+        printf("%d, ", raiz->val);
+        navEmOrdem(raiz->dir);
+    } else return;
 }
 
-/* void navPreOrdem(struct noBst* raiz) { */
-/*     //IMPLEMENTAR */
-/* } */
+void navPreOrdem(struct noBst* raiz) {
+    //Raíz, esq, dir
+    if(raiz != NULL){
+        printf("%d, ", raiz->val);
+        navPreOrdem(raiz->esq);
+        navPreOrdem(raiz->dir);
+    } else return;
+}
 
-/* void navPosOrdem(struct noBst* raiz) { */
-/*     //IMPLEMENTAR */
-/* } */
+void navPosOrdem(struct noBst* raiz) {
+    //esq,dir,raíz
+    if(raiz != NULL){
+        navPosOrdem(raiz->esq);
+        navPosOrdem(raiz->dir);
+        printf("%d, ", raiz->val);
+    } else return;
+}
+
+void navNivel(struct noBst* raiz){
+    TAILQ_INIT(&head);
+    add_to_queue(raiz);
+
+    struct entry *elem = head.tqh_first;
+    while(elem != NULL)
+    {
+        struct noBst* noVisitado = elem->raiz;
+        printf("%d, ", noVisitado->val);
+
+        if(noVisitado->esq != NULL) add_to_queue(noVisitado->esq);
+        if(noVisitado->dir != NULL) add_to_queue(noVisitado->dir);
+
+        TAILQ_REMOVE(&head, elem, entries);
+        free(elem);
+        elem = head.tqh_first;
+    }
+}
 
 int min(struct noBst* raiz) {
     if (raiz->esq == NULL) return raiz->val;
@@ -92,20 +149,45 @@ int max(struct noBst* raiz) {
     else return max(raiz->dir);
 }
 
-int maior(int a, int b)
-{
-    if(a > b) return a;
-    else return b;
-}
-
 int altura(struct noBst* raiz) {
     if(raiz == NULL) return -1;
     else return 1 + maior(altura(raiz->esq),altura(raiz->dir)); 
 }
 
-/* struct noBst* removerRec(struct noBst* raiz, int val) { */
-/*     //IMPLEMENTAR */
-/* } */
+struct noBst* removerRec(struct noBst* raiz, int val) {
+    if(raiz != NULL)
+    {
+        if(val < raiz->val) raiz->esq = removerRec(raiz->esq,val); 
+        else if(val > raiz->val) raiz->dir = removerRec(raiz->dir,val);
+        else
+        {
+            if(raiz->esq == NULL && raiz->dir == NULL)
+            {
+                free(raiz);
+                raiz = NULL;
+            }
+            else if (raiz->esq == NULL)
+            {
+                struct noBst* temp = raiz->dir;
+                free(raiz);
+                raiz = temp;
+            }
+            else if(raiz->dir == NULL)
+            {
+                struct noBst* temp = raiz->esq;
+                free(raiz);
+                raiz = temp;
+            }
+            else
+            {
+                int maiorEsq = max(raiz->esq);
+                raiz->val = maiorEsq;
+                raiz->esq = removerRec(raiz->esq,maiorEsq);
+            }
+        }
+    }
+    return raiz;
+}
 
 /* void remover(struct bst* bst, int val) { */
 /*     //IMPLEMENTAR */
